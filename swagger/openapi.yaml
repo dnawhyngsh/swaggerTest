@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  title: Student API
+  description: Student Demo API
+  contact:
+    name: TutorialPedia
+    url: https://tutorialspedia.com
+  version: 1.0.0
+servers:   
+  - url: http://devapi.com
+  - url: http://prodapi.com
+paths:
+  /student:
+    description: Student Resource
+    get:
+      description:  Operation to fetch Student
+      parameters: 
+        - in: query
+          name: studentname
+          required: true
+          schema:
+            type: string
+            example: Ajmal
+      responses:
+        200:
+          description: Succes Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/students'
+    post:
+      description: Add a new Student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/student'
+      responses:
+        200:
+          description: Record succesfully added
+  /student{id}:
+    description: Get Student based on parameter
+    get:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Succes Respond with Path Param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/students'
+components:
+  schemas:
+    student:
+      type: object
+      properties:
+        StudentID:
+          type: integer
+          example: 3
+        StudentName:
+          type: string
+          example: David
+        StudentRemarks:
+          type: string
+          example: High Grade Student
+    students:
+      type: array
+      items:
+        properties:
+          StudentID:
+            type: integer
+            example: 3
+          StudentName:
+            type: string
+            example: David
+          StudentRemarks:
+            type: string
+            example: High Grade Student
